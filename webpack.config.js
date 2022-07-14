@@ -1,28 +1,35 @@
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 module.exports = {
     mode: 'production',
     entry: './src/index.ts',
+    resolve: {
+        extensions: ['.ts'],
+        alias: {
+            '@app': path.resolve(__dirname, 'src'),
+        },
+    },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
+                test: /\.ts$/,
                 exclude: /node_modules/,
+                loader: 'ts-loader',
+                options: {
+                    configFile: 'tsconfig.json'
+                },
             },
         ],
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
         clean: true,
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
+        library: {
+            name: 'canvas-brightness-sampler',
+            type: 'umd',
+        },
     },
     devServer: {
         open: true,
@@ -31,27 +38,8 @@ module.exports = {
         },
         compress: true,
         port: 3000,
-        watchFiles: [
-            'src/**/*',
-            'styles.css'
-        ],
+        watchFiles: ['src/**/*'],
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'JavaScript Image Converter',
-            inject: 'body',
-        }),
-        new HtmlWebpackTagsPlugin({
-            links: [
-                'styles.css',
-            ],
-        }),
-        new CopyPlugin({
-            patterns: [
-                'styles.css',
-            ],
-        }),
-    ],
     optimization: {
         minimize: true,
         minimizer: [new TerserPlugin()],

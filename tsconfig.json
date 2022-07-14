@@ -1,11 +1,23 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "strict": true,
+    "baseUrl": "./",
+    "outDir": "dist",
+    "target": "es2015",
     "sourceMap": true,
-    "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es5",
-    "allowJs": true,
-    "moduleResolution": "node"
-  }
+    "declaration": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "paths": {
+      "@app/*": ["src/*"]
+    }
+  },
+  "include": [
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

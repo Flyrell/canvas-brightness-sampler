@@ -1,17 +1,39 @@
 {
+  "name": "canvas-brightness-sampler",
+  "version": "1.0.0",
+  "description": "Library used to traverse canvas pixels based on a sample size and get their brightness levels",
+  "license": "MIT",
+  "files": ["dist", "LICENSE"],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "canvas pixel",
+    "canvas sampler",
+    "canvas traverse",
+    "pixel brightness",
+    "canvas pixel sampler",
+    "canvas brighness sampler",
+    "canvas image manipulation"
+  ],
+  "homepage": "https://github.com/Flyrell/canvas-brightness-sampler#readme",
+  "author": {
+    "email": "dawid@zbinski.dev",
+    "name": "Dawid Zbinski",
+    "url": "https://zbinski.dev"
+  },
   "scripts": {
-    "build": "webpack",
-    "serve": "webpack serve"
+    "build": "webpack"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^11.0.0",
-    "html-webpack-plugin": "^5.5.0",
-    "html-webpack-tags-plugin": "^3.0.2",
     "terser-webpack-plugin": "^5.3.3",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Flyrell/canvas-brightness-sampler.git"
   }
 }

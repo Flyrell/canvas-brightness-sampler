@@ -1,11 +1,22 @@
-const CANVAS_SIZE = 1024;
+import { Renderer } from '@app/Renderer';
 
-const canvas = document.createElement('canvas');
-canvas.width = CANVAS_SIZE;
-canvas.height = CANVAS_SIZE;
+export function createRenderer(canvas: HTMLCanvasElement): Renderer {
+    if (!canvas) {
+        throw new Error('Canvas not provided.');
+    }
 
-const context = canvas.getContext('2d');
-context.fillStyle = 'black';
-context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    if (!(canvas instanceof HTMLCanvasElement)) {
+        throw new Error('Canvas is not the HTMLCanvasElement.');
+    }
 
-document.body.append(canvas);
+    if (!canvas.width || !canvas.height) {
+        throw new Error('Canvas should have its dimensions set.');
+    }
+
+    const context = canvas.getContext('2d');
+    if (!context) {
+        throw new Error('Unable to extract "2d" context from the canvas.')
+    }
+
+    return new Renderer(canvas.width, canvas.height, context);
+}
