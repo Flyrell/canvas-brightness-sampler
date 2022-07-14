@@ -9,4 +9,3 @@ context.fillStyle = 'black';
 context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
 document.body.append(canvas);
-console.log('hey');

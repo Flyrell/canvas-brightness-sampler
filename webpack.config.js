@@ -20,15 +20,21 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
+        clean: true,
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
+        open: true,
         static: {
             directory: path.join(__dirname, 'dist'),
         },
         compress: true,
         port: 3000,
+        watchFiles: [
+            'src/**/*',
+            'styles.css'
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
