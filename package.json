@@ -1,6 +1,6 @@
 {
   "name": "canvas-brightness-sampler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Library used to traverse canvas pixels based on a sample size and get their brightness levels",
   "license": "MIT",
   "files": [
