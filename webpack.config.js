@@ -1,14 +1,12 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const pathsTransformer = require('ts-transform-paths').default;
 
 module.exports = {
     mode: 'production',
     entry: './src/index.ts',
     resolve: {
         extensions: ['.ts'],
-        alias: {
-            '@app': path.resolve(__dirname, 'src'),
-        },
     },
     module: {
         rules: [
@@ -17,7 +15,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'ts-loader',
                 options: {
-                    configFile: 'tsconfig.json'
+                    getCustomTransformers: () => pathsTransformer()
                 },
             },
         ],
@@ -30,15 +28,6 @@ module.exports = {
             name: 'canvas-brightness-sampler',
             type: 'umd',
         },
-    },
-    devServer: {
-        open: true,
-        static: {
-            directory: path.join(__dirname, 'dist'),
-        },
-        compress: true,
-        port: 3000,
-        watchFiles: ['src/**/*'],
     },
     optimization: {
         minimize: true,
