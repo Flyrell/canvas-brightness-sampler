@@ -15,7 +15,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'ts-loader',
                 options: {
-                    getCustomTransformers: () => pathsTransformer()
+                    getCustomTransformers: () => pathsTransformer(),
                 },
             },
         ],
