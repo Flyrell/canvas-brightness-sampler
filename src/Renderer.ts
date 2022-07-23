@@ -8,7 +8,7 @@ export class Renderer {
     constructor(
         private _width: number,
         private _height: number,
-        private _context: CanvasRenderingContext2D,
+        private _context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
     ) {}
 
     getSampleSize(): number {

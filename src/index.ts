@@ -1,7 +1,7 @@
 import { Renderer } from '@app/Renderer';
 import { RendererOptions } from '@app/models';
 
-export function createRenderer(canvas: HTMLCanvasElement, options: RendererOptions = {}): Renderer {
+export function createRenderer(canvas: HTMLCanvasElement | OffscreenCanvas, options: RendererOptions = {}): Renderer {
     if (!canvas) {
         throw new Error('Canvas not provided.');
     }
@@ -32,3 +32,5 @@ export function createRenderer(canvas: HTMLCanvasElement, options: RendererOptio
     }
     return renderer;
 }
+
+export { Renderer, RendererOptions };
