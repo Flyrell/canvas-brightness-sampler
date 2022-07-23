@@ -1,14 +1,16 @@
-import { DrawCallbackFn } from '@app/models';
+import { Signal } from '@app/Signal';
+import { Context, DrawCallbackFn } from '@app/models';
 
 export class Renderer {
     private static readonly colorRange = 255;
     private _sampleSize = 1;
     private _walkingSize = 1;
+    private _signal = new Signal();
 
     constructor(
         private _width: number,
         private _height: number,
-        private _context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+        private _context: Context,
     ) {}
 
     getSampleSize(): number {
@@ -17,6 +19,14 @@ export class Renderer {
 
     getWalkingSize(): number {
         return this._walkingSize;
+    }
+
+    getSignal(): Signal {
+        return this._signal;
+    }
+
+    getContext(): Context {
+        return this._context;
     }
 
     setSampleSize(sampleSize: number): void {
@@ -28,13 +38,15 @@ export class Renderer {
     }
 
     render(cb: DrawCallbackFn): void {
-        const walkingSize = this.getWalkingSize()
+        const signal = this.getSignal();
+        const walkingSize = this.getWalkingSize();
         for (const pixelRow of Renderer.createWalkingIterable(this._width, walkingSize)) {
             for (const pixelCol of Renderer.createWalkingIterable(this._height, walkingSize)) {
                 const brightness = this.getPixelBrightness(pixelRow, pixelCol);
-                cb(brightness, this._context, pixelRow, pixelCol);
+                cb(brightness, pixelRow, pixelCol);
             }
         }
+        signal.send();
     }
 
     getPixelBrightness(posX: number, posY: number): number {
@@ -51,7 +63,7 @@ export class Renderer {
         const startPosX = posX - sampleSize < 0 ? 0 : posX - sampleSize;
         const startPosY = posY - sampleSize < 0 ? 0 : posY - sampleSize;
 
-        const pixel = this._context.getImageData(startPosX, startPosY, sampleSizeCol - 1, sampleSizeRow - 1);
+        const pixel = this._context.getImageData(startPosX, startPosY, sampleSizeCol, sampleSizeRow);
         for (const col of Renderer.createSampleArray(sampleSizeCol)) {
             for (const row of Renderer.createSampleArray(sampleSizeRow)) {
                 const prefix = (col * sampleSize + row) * pixelSize;
@@ -65,8 +77,8 @@ export class Renderer {
         return pixelValues.reduce((sum, value) => sum + value, 0) / pixelValues.length;
     }
 
-    private static createWalkingIterable(size: number, sampleSize: number): number[] {
-        return Array.from({ length: Math.ceil(size / sampleSize) }, (_, i) => i * sampleSize);
+    private static createWalkingIterable(size: number, walkingSize: number): number[] {
+        return Array.from({ length: Math.ceil(size / walkingSize) }, (_, i) => i * walkingSize);
     }
 
     private static createSampleArray(sampleSize: number): number[] {

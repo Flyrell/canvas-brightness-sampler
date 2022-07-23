@@ -1,3 +1,6 @@
+export type Canvas = HTMLCanvasElement | OffscreenCanvas;
+export type Context = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
+
 export interface RendererOptions {
     sampleSize?: number;
     walkingSize?: number;
@@ -5,7 +8,6 @@ export interface RendererOptions {
 
 export type DrawCallbackFn = (
     brightness: number,
-    context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
     positionX: number,
     positionY: number,
 ) => void;

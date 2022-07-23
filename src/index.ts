@@ -1,7 +1,8 @@
+import { Signal } from '@app/Signal';
 import { Renderer } from '@app/Renderer';
-import { RendererOptions } from '@app/models';
+import { Context, Canvas, RendererOptions, DrawCallbackFn } from '@app/models';
 
-export function createRenderer(canvas: HTMLCanvasElement | OffscreenCanvas, options: RendererOptions = {}): Renderer {
+export function createRenderer(canvas: Canvas, options: RendererOptions = {}): Renderer {
     if (!canvas) {
         throw new Error('Canvas not provided.');
     }
@@ -33,4 +34,4 @@ export function createRenderer(canvas: HTMLCanvasElement | OffscreenCanvas, opti
     return renderer;
 }
 
-export { Renderer, RendererOptions };
+export { Renderer, RendererOptions, Signal, Canvas, Context, DrawCallbackFn };
