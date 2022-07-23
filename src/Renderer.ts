@@ -35,6 +35,9 @@ export class Renderer {
 
     setWalkingSize(walkingSize: number): void {
         this._walkingSize = walkingSize;
+        if (this._width % this._walkingSize !== 0 || this._height % this._walkingSize !== 0) {
+            console.warn('Walking size should be a divider of canvas\' width and height');
+        }
     }
 
     render(cb: DrawCallbackFn): void {
@@ -64,8 +67,8 @@ export class Renderer {
         const startPosY = posY - sampleSize < 0 ? 0 : posY - sampleSize;
 
         const pixel = this._context.getImageData(startPosX, startPosY, sampleSizeCol, sampleSizeRow);
-        for (const col of Renderer.createSampleArray(sampleSizeCol)) {
-            for (const row of Renderer.createSampleArray(sampleSizeRow)) {
+        for (let col = 0; col < sampleSizeCol; col++) {
+            for (let row = 0; row < sampleSizeRow; row++) {
                 const prefix = (col * sampleSize + row) * pixelSize;
                 const alpha = (pixel.data[prefix + 3] / Renderer.colorRange);
                 for (const color of [0, 1, 2]) {
@@ -79,9 +82,5 @@ export class Renderer {
 
     private static createWalkingIterable(size: number, walkingSize: number): number[] {
         return Array.from({ length: Math.ceil(size / walkingSize) }, (_, i) => i * walkingSize);
-    }
-
-    private static createSampleArray(sampleSize: number): number[] {
-        return Array.from({ length: sampleSize }, (_, i) => i);
     }
 }
