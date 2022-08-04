@@ -42,10 +42,8 @@ export class Sampler {
 
     sample(cb: DrawCallbackFn): void {
         const skipSize = this.getSkipSize();
-        const widthSteps = Math.ceil(this._width / skipSize);
-        const heightSteps = Math.ceil(this._height / skipSize);
-        for (let pixelCol = 0; pixelCol < widthSteps; pixelCol += skipSize) {
-            for (let pixelRow = 0; pixelRow < heightSteps; pixelRow += skipSize) {
+        for (let pixelCol = 0; pixelCol < this._width; pixelCol += skipSize) {
+            for (let pixelRow = 0; pixelRow < this._height; pixelRow += skipSize) {
                 const brightness = this.getPixelBrightness(pixelCol, pixelRow);
                 cb(brightness, pixelCol, pixelRow);
             }
