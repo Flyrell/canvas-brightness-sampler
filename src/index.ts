@@ -1,8 +1,8 @@
 import { Signal } from '@app/Signal';
-import { Renderer } from '@app/Renderer';
-import { Context, Canvas, RendererOptions, DrawCallbackFn } from '@app/models';
+import { Sampler } from '@app/Sampler';
+import { Context, Canvas, SamplerOptions, DrawCallbackFn } from '@app/models';
 
-export function createRenderer(canvas: Canvas, options: RendererOptions = {}): Renderer {
+export function createSampler(canvas: Canvas, options: SamplerOptions = {}): Sampler {
     if (!canvas) {
         throw new Error('Canvas not provided.');
     }
@@ -23,15 +23,15 @@ export function createRenderer(canvas: Canvas, options: RendererOptions = {}): R
         throw new Error('Unable to extract "2d" context from the canvas.')
     }
 
-    const renderer = new Renderer(canvas.width, canvas.height, context);
+    const sampler = new Sampler(canvas.width, canvas.height, context);
     if (options.sampleSize) {
-        renderer.setSampleSize(options.sampleSize);
-        renderer.setWalkingSize(options.sampleSize);
+        sampler.setSampleSize(options.sampleSize);
     }
-    if (options.walkingSize) {
-        renderer.setWalkingSize(options.walkingSize);
+    if (options.skipSize) {
+        sampler.setSkipSize(options.skipSize);
     }
-    return renderer;
+
+    return sampler;
 }
 
-export { Renderer, RendererOptions, Signal, Canvas, Context, DrawCallbackFn };
+export { Sampler, SamplerOptions, Signal, Canvas, Context, DrawCallbackFn };
